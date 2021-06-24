@@ -24,6 +24,7 @@ accordingly
   <url>http://YourGitHubUser.github.io/PortlandStateJavaSummer2021</url>
 
   <modules>
+    <module>student</module>
   </modules>
 
   <inceptionYear>2021</inceptionYear>
