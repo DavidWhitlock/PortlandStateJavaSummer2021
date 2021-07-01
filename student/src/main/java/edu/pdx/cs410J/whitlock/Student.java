@@ -13,6 +13,7 @@ public class Student extends Human {
   static final String MISSING_COMMAND_LINE_ARGUMENTS = "Missing command line arguments";
   static final String MISSING_GENDER = "Missing Gender";
   static final String MISSING_GPA = "Missing GPA";
+  static final String GPA_OUT_OF_BOUNDS = "GPA is out of bounds.  Range is 0 to 4.";
 
   /**                                                                               
    * Creates a new <code>Student</code>                                             
@@ -68,9 +69,32 @@ public class Student extends Human {
       } else {
         System.err.println(MISSING_GPA);
       }
+
+    } else if (args.length == 3) {
+      String gpa = args[2];
+      validateGpa(gpa);
+
+      System.exit(0);
     }
 
     System.exit(1);
+  }
+
+  private static void printErrorMessageAndExit(String message) {
+    System.err.println(message);
+    System.exit(1);
+  }
+
+  private static void validateGpa(String gpaAsString) {
+    try {
+      double gpa = Double.parseDouble(gpaAsString);
+      if (gpa < 0.0 || gpa > 4.0) {
+        printErrorMessageAndExit(GPA_OUT_OF_BOUNDS);
+      }
+
+    } catch (NumberFormatException ex) {
+      printErrorMessageAndExit("Invalid GPA: " + gpaAsString);
+    }
   }
 
   private static boolean isRecognizedGender(String gender) {

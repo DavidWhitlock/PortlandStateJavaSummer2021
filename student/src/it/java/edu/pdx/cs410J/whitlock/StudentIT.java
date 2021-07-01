@@ -63,4 +63,33 @@ class StudentIT extends InvokeMainTestCase {
     assertRecognizedGenderButGpaIsMissing("male");
   }
 
+  @Test
+  void nonParsableGpa() {
+    MainMethodResult result = invokeMain(Student.class, "Cody", "male", "Java");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Invalid GPA: Java"));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  void validGpaWithNoClasses() {
+    MainMethodResult result = invokeMain(Student.class, "Cody", "male", "3.45");
+    assertThat(result.getTextWrittenToStandardError(), equalTo(""));
+    assertThat(result.getExitCode(), equalTo(0));
+  }
+
+  @Test
+  void gpaLessThanZero() {
+    MainMethodResult result = invokeMain(Student.class, "Cody", "male", "-1.0");
+    assertThat(result.getTextWrittenToStandardError(), containsString(Student.GPA_OUT_OF_BOUNDS));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  void gpaGreaterThanFour() {
+    MainMethodResult result = invokeMain(Student.class, "Cody", "male", "5.0");
+    assertThat(result.getTextWrittenToStandardError(), containsString(Student.GPA_OUT_OF_BOUNDS));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+
 }
