@@ -23,7 +23,8 @@ class StudentIT extends InvokeMainTestCase {
   @Test
   void invokingMainWithNoArgumentsPrintsMissingArgumentsToStandardError() {
     InvokeMainTestCase.MainMethodResult result = invokeMain(Student.class);
-    assertThat(result.getTextWrittenToStandardError(), containsString("Missing command line arguments"));
+    assertThat(result.getTextWrittenToStandardError(), containsString(Student.MISSING_COMMAND_LINE_ARGUMENTS));
+    assertThat(result.getTextWrittenToStandardError(), containsString(Student.USAGE_MESSAGE));
   }
 
 }
