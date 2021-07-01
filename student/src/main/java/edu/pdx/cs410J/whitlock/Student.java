@@ -55,33 +55,31 @@ public class Student extends Human {
    */
   public static void main(String[] args) {
     if (args.length == 0) {
-      System.err.println(MISSING_COMMAND_LINE_ARGUMENTS);
-      System.err.println(USAGE_MESSAGE);
+      printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
 
     } else if (args.length == 1) {
-      System.err.println(MISSING_GENDER);
+      printErrorMessageAndExit(MISSING_GENDER);
 
     } else if (args.length == 2) {
       String gender = args[1];
       if (!isRecognizedGender(gender)) {
-        System.err.println("Unrecognized gender: \"" + gender + "\"");
+        printErrorMessageAndExit("Unrecognized gender: \"" + gender + "\"");
 
       } else {
-        System.err.println(MISSING_GPA);
+        printErrorMessageAndExit(MISSING_GPA);
       }
 
     } else if (args.length == 3) {
       String gpa = args[2];
       validateGpa(gpa);
-
-      System.exit(0);
     }
 
-    System.exit(1);
+    System.exit(0);
   }
 
   private static void printErrorMessageAndExit(String message) {
     System.err.println(message);
+    System.err.println(USAGE_MESSAGE);
     System.exit(1);
   }
 
