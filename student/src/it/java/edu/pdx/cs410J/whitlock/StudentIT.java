@@ -43,9 +43,24 @@ class StudentIT extends InvokeMainTestCase {
 
   @Test
   void otherIsARecognizedGenderButGpaIsMissing() {
-    MainMethodResult result = invokeMain(Student.class, "Dave", "other");
+    String gender = "other";
+    assertRecognizedGenderButGpaIsMissing(gender);
+  }
+
+  private void assertRecognizedGenderButGpaIsMissing(String gender) {
+    MainMethodResult result = invokeMain(Student.class, "Dave", gender);
     assertThat(result.getTextWrittenToStandardError(), containsString(Student.MISSING_GPA));
     assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  void femaleIsARecognizedGenderButGpaIsMissing() {
+    assertRecognizedGenderButGpaIsMissing("female");
+  }
+
+  @Test
+  void maleIsARecognizedGenderButGpaIsMissing() {
+    assertRecognizedGenderButGpaIsMissing("male");
   }
 
 }

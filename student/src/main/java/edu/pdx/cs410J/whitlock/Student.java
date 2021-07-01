@@ -64,15 +64,16 @@ public class Student extends Human {
       String gender = args[1];
       if (!isRecognizedGender(gender)) {
         System.err.println("Unrecognized gender: \"" + gender + "\"");
-      }
 
-      System.err.println(MISSING_GPA);
+      } else {
+        System.err.println(MISSING_GPA);
+      }
     }
 
     System.exit(1);
   }
 
   private static boolean isRecognizedGender(String gender) {
-    return gender.equals("other");
+    return gender.equals("other") || gender.equals("female") || gender.equals("male");
   }
 }
