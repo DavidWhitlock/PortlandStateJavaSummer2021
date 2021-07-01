@@ -11,6 +11,8 @@ public class Student extends Human {
 
   public static final String USAGE_MESSAGE = "usage: java Student name gender gpa classes";
   static final String MISSING_COMMAND_LINE_ARGUMENTS = "Missing command line arguments";
+  static final String MISSING_GENDER = "Missing Gender";
+  static final String MISSING_GPA = "Missing GPA";
 
   /**                                                                               
    * Creates a new <code>Student</code>                                             
@@ -51,8 +53,26 @@ public class Student extends Human {
    * standard out by invoking its <code>toString</code> method.
    */
   public static void main(String[] args) {
-    System.err.println(MISSING_COMMAND_LINE_ARGUMENTS);
-    System.err.println(USAGE_MESSAGE);
+    if (args.length == 0) {
+      System.err.println(MISSING_COMMAND_LINE_ARGUMENTS);
+      System.err.println(USAGE_MESSAGE);
+
+    } else if (args.length == 1) {
+      System.err.println(MISSING_GENDER);
+
+    } else if (args.length == 2) {
+      String gender = args[1];
+      if (!isRecognizedGender(gender)) {
+        System.err.println("Unrecognized gender: \"" + gender + "\"");
+      }
+
+      System.err.println(MISSING_GPA);
+    }
+
     System.exit(1);
+  }
+
+  private static boolean isRecognizedGender(String gender) {
+    return gender.equals("other");
   }
 }

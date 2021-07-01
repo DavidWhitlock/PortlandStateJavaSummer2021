@@ -27,4 +27,25 @@ class StudentIT extends InvokeMainTestCase {
     assertThat(result.getTextWrittenToStandardError(), containsString(Student.USAGE_MESSAGE));
   }
 
+  @Test
+  void missingGender() {
+    MainMethodResult result = invokeMain(Student.class, "Dave");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Missing Gender"));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  void unrecognizedGender() {
+    MainMethodResult result = invokeMain(Student.class, "Dave", "3.45");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Unrecognized gender: \"3.45\""));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  void otherIsARecognizedGenderButGpaIsMissing() {
+    MainMethodResult result = invokeMain(Student.class, "Dave", "other");
+    assertThat(result.getTextWrittenToStandardError(), containsString(Student.MISSING_GPA));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
+
 }
