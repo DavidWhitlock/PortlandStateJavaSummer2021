@@ -1,9 +1,12 @@
 package edu.pdx.cs410J.whitlock;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.StringContains.containsString;
 
@@ -96,6 +99,17 @@ class StudentIT extends InvokeMainTestCase {
     MainMethodResult result = invokeMain(Student.class, "Dave", "unrecognized", "3.45");
     assertThat(result.getTextWrittenToStandardError(), containsString("Unrecognized gender: \"unrecognized\""));
     assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  @Disabled
+  void daveStudentFromAssignment() {
+    MainMethodResult result = invokeMain(Student.class, "Dave", "male", "3.64", "Algorithms", "Operating Systems", "Java");
+    assertThat(result.getTextWrittenToStandardError(), emptyString());
+    String message = "Dave has a GPA of 3.64 and is taking 3 classes: Algorithms, Operating " +
+      "Systems, and Java. He says \"This class is too much work\".";
+    assertThat(result.getTextWrittenToStandardOut(), equalTo(message));
+    assertThat(result.getExitCode(), equalTo(0));
   }
 
 }
