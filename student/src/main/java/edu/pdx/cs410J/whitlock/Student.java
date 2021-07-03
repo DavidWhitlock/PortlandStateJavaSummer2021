@@ -16,6 +16,7 @@ public class Student extends Human {
   static final String GPA_OUT_OF_BOUNDS = "GPA is out of bounds.  Range is 0 to 4.";
 
   private final double gpa;
+  private final ArrayList<String> classes;
 
   /**                                                                               
    * Creates a new <code>Student</code>                                             
@@ -33,6 +34,7 @@ public class Student extends Human {
   public Student(String name, ArrayList<String> classes, double gpa, String gender) {
     super(name);
     this.gpa = gpa;
+    this.classes = classes;
   }
 
   /**                                                                               
@@ -48,7 +50,22 @@ public class Student extends Human {
    * <code>Student</code>.                                                          
    */                                                                               
   public String toString() {
-    return getName() + " has a GPA of " + gpa;
+    int numClasses = this.classes.size();
+
+    StringBuilder sb = new StringBuilder();
+    sb.append(getName()).append(" has a GPA of ").append(gpa);
+    sb.append(" and is taking ").append(numClasses).append(" class");
+    sb.append(numClasses == 1 ? "" : "es");
+
+    if (numClasses > 0) {
+      sb.append(": ");
+      for (String className : this.classes) {
+        sb.append(className);
+      }
+    }
+
+    sb.append(".");
+    return sb.toString();
   }
 
   /**

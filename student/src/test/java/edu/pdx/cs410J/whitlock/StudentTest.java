@@ -67,4 +67,27 @@ public class StudentTest
 
   }
 
+  @Test
+  void studentTakingZeroClasses() {
+    double gpa = 3.45;
+    String name = "Name";
+    Student student = new Student(name, new ArrayList<>(), gpa, "other");
+
+    assertThat(student.toString(), containsString("is taking 0 classes."));
+  }
+
+  @Test
+  void studentTakingOneClass() {
+    double gpa = 3.45;
+    String name = "Name";
+    ArrayList<String> classes = new ArrayList<>();
+    String className = "Class1";
+    classes.add(className);
+
+    Student student = new Student(name, classes, gpa, "other");
+
+    assertThat(student.toString(), containsString("is taking 1 class: " + className + "."));
+
+  }
+
 }
