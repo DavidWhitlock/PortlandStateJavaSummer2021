@@ -3,8 +3,9 @@ package edu.pdx.cs410J.whitlock;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -20,7 +21,7 @@ public class StudentTest
   @Test
   void studentNamedPatIsNamedPat() {
     String name = "Pat";
-    var pat = new Student(name, new ArrayList<>(), 0.0, "Doesn't matter");
+    var pat = new Student(name, emptyList(), 0.0, "Doesn't matter");
     assertThat(pat.getName(), equalTo(name));
   }
 
@@ -34,10 +35,7 @@ public class StudentTest
   }
 
   private Student getDave() {
-    ArrayList<String> classes = new ArrayList<>();
-    classes.add("Algorithms");
-    classes.add("Operating Systems");
-    classes.add("Java");
+    List<String> classes = List.of("Algorithms", "Operating Systems", "Java");
 
     return new Student("Dave", classes, 3.64, "male");
   }
@@ -52,7 +50,7 @@ public class StudentTest
   @Test
   void toStringContainsGpa() {
     double gpa = 3.45;
-    Student student = new Student("Name", new ArrayList<>(), gpa, "other");
+    Student student = new Student("Name", emptyList(), gpa, "other");
 
     assertThat(student.toString(), containsString(String.valueOf(gpa)));
   }
@@ -61,7 +59,7 @@ public class StudentTest
   void toStringContainsNameAndGpa() {
     double gpa = 3.45;
     String name = "Name";
-    Student student = new Student(name, new ArrayList<>(), gpa, "other");
+    Student student = new Student(name, emptyList(), gpa, "other");
 
     assertThat(student.toString(), containsString(name + " has a GPA of " + gpa));
 
@@ -71,22 +69,31 @@ public class StudentTest
   void studentTakingZeroClasses() {
     double gpa = 3.45;
     String name = "Name";
-    Student student = new Student(name, new ArrayList<>(), gpa, "other");
+    Student student = new Student(name, emptyList(), gpa, "other");
 
     assertThat(student.toString(), containsString("is taking 0 classes."));
   }
 
   @Test
   void studentTakingOneClass() {
-    double gpa = 3.45;
-    String name = "Name";
-    ArrayList<String> classes = new ArrayList<>();
     String className = "Class1";
-    classes.add(className);
+    List<String> classes = List.of(className);
 
-    Student student = new Student(name, classes, gpa, "other");
+    Student student = new Student("Name", classes, 3.45, "other");
 
     assertThat(student.toString(), containsString("is taking 1 class: " + className + "."));
+
+  }
+
+  @Test
+  void studentTakingTwoClasses() {
+    String className1 = "Class1";
+    String className2 = "Class2";
+    List<String> classes = List.of(className1, className2);
+
+    Student student = new Student("Name", classes, 3.45, "other");
+
+    assertThat(student.toString(), containsString("is taking 2 classes: " + className1 + " and " + className2 + "."));
 
   }
 

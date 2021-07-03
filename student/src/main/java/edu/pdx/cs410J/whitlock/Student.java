@@ -2,8 +2,8 @@ package edu.pdx.cs410J.whitlock;
 
 import edu.pdx.cs410J.lang.Human;
 
-import java.util.ArrayList;
-                                                                                    
+import java.util.List;
+
 /**                                                                                 
  * This class is represents a <code>Student</code>.                                 
  */                                                                                 
@@ -16,7 +16,7 @@ public class Student extends Human {
   static final String GPA_OUT_OF_BOUNDS = "GPA is out of bounds.  Range is 0 to 4.";
 
   private final double gpa;
-  private final ArrayList<String> classes;
+  private final List<String> classes;
 
   /**                                                                               
    * Creates a new <code>Student</code>                                             
@@ -31,7 +31,7 @@ public class Student extends Human {
    * @param gender                                                                  
    *        The student's gender ("male", "female", or "other", case insensitive)
    */                                                                               
-  public Student(String name, ArrayList<String> classes, double gpa, String gender) {
+  public Student(String name, List<String> classes, double gpa, String gender) {
     super(name);
     this.gpa = gpa;
     this.classes = classes;
@@ -59,8 +59,19 @@ public class Student extends Human {
 
     if (numClasses > 0) {
       sb.append(": ");
-      for (String className : this.classes) {
-        sb.append(className);
+
+      if (numClasses == 1) {
+        sb.append(this.classes.get(0));
+
+      } else {
+        for (int i = 0; i < numClasses; i++) {
+          if (i == numClasses - 1) {
+            sb.append(" and ");
+          }
+
+          String className = this.classes.get(i);
+          sb.append(className);
+        }
       }
     }
 
