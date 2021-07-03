@@ -1,6 +1,5 @@
 package edu.pdx.cs410J.whitlock;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -32,7 +31,6 @@ public class StudentTest
   }
 
   @Test
-  @Disabled
   void daveStudentFromAssignment() {
     Student dave = getDave();
 
@@ -141,5 +139,18 @@ public class StudentTest
     Student student = new Student("Name", emptyList(), 3.45, Gender.MALE);
     assertThat(student.toString(), containsString("He"));
   }
+
+  @Test
+  void allStudentsSayThisClassIsTooMuchWork() {
+    Student student = new Student("Name", emptyList(), 3.45, Gender.MALE);
+    assertThat(student.says(), equalTo("This class is too much work"));
+  }
+
+  @Test
+  void toStringContainsWhatStudentSays() {
+    Student student = new Student("Name", emptyList(), 3.45, Gender.MALE);
+    assertThat(student.toString(), containsString(" says \"This class is too much work\"."));
+  }
+
 
 }
