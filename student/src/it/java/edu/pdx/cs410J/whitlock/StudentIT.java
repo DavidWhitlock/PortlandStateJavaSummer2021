@@ -91,5 +91,11 @@ class StudentIT extends InvokeMainTestCase {
     assertThat(result.getExitCode(), equalTo(1));
   }
 
+  @Test
+  void unrecognizedGenderAndValidGpa() {
+    MainMethodResult result = invokeMain(Student.class, "Dave", "unrecognized", "3.45");
+    assertThat(result.getTextWrittenToStandardError(), containsString("Unrecognized gender: \"unrecognized\""));
+    assertThat(result.getExitCode(), equalTo(1));
+  }
 
 }

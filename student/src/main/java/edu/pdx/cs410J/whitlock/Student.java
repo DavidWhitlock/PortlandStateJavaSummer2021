@@ -54,24 +54,34 @@ public class Student extends Human {
    * standard out by invoking its <code>toString</code> method.
    */
   public static void main(String[] args) {
-    if (args.length == 0) {
+    String name = null;
+    String gender = null;
+    String gpa = null;
+
+    for (String arg : args) {
+      if (name == null) {
+        name = arg;
+
+      } else if (gender == null) {
+        gender = arg;
+        if (!isRecognizedGender(gender)) {
+          printErrorMessageAndExit("Unrecognized gender: \"" + gender + "\"");
+        }
+
+      } else if (gpa == null) {
+        gpa = arg;
+        validateGpa(gpa);
+      }
+    }
+
+    if (name == null) {
       printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
 
-    } else if (args.length == 1) {
+    } else if (gender == null) {
       printErrorMessageAndExit(MISSING_GENDER);
 
-    } else if (args.length == 2) {
-      String gender = args[1];
-      if (!isRecognizedGender(gender)) {
-        printErrorMessageAndExit("Unrecognized gender: \"" + gender + "\"");
-
-      } else {
-        printErrorMessageAndExit(MISSING_GPA);
-      }
-
-    } else if (args.length == 3) {
-      String gpa = args[2];
-      validateGpa(gpa);
+    } else if (gpa == null) {
+      printErrorMessageAndExit(MISSING_GPA);
     }
 
     System.exit(0);
