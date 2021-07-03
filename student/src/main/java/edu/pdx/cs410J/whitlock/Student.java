@@ -17,7 +17,7 @@ public class Student extends Human {
 
   private final double gpa;
   private final List<String> classes;
-  private final String gender;
+  private final Gender gender;
 
   /**                                                                               
    * Creates a new <code>Student</code>                                             
@@ -32,7 +32,7 @@ public class Student extends Human {
    * @param gender                                                                  
    *        The student's gender ("male", "female", or "other", case insensitive)
    */                                                                               
-  public Student(String name, List<String> classes, double gpa, String gender) {
+  public Student(String name, List<String> classes, double gpa, Gender gender) {
     super(name);
     this.gpa = gpa;
     this.classes = classes;
@@ -70,15 +70,15 @@ public class Student extends Human {
 
   private void appendGenderPronoun(StringBuilder sb) {
     switch (this.gender) {
-      case "other":
+      case OTHER:
         sb.append("They");
         break;
 
-      case "female":
+      case FEMALE:
         sb.append("She");
         break;
 
-      case "male":
+      case MALE:
         sb.append("He");
         break;
 

@@ -21,14 +21,14 @@ public class StudentTest
   @Test
   void studentNamedPatIsNamedPat() {
     String name = "Pat";
-    var pat = new Student(name, emptyList(), 0.0, "Doesn't matter");
+    var pat = new Student(name, emptyList(), 0.0, Gender.OTHER);
     assertThat(pat.getName(), equalTo(name));
   }
 
   private Student getDave() {
     List<String> classes = List.of("Algorithms", "Operating Systems", "Java");
 
-    return new Student("Dave", classes, 3.64, "male");
+    return new Student("Dave", classes, 3.64, Gender.MALE);
   }
 
   @Test
@@ -50,7 +50,7 @@ public class StudentTest
   @Test
   void toStringContainsGpa() {
     double gpa = 3.45;
-    Student student = new Student("Name", emptyList(), gpa, "other");
+    Student student = new Student("Name", emptyList(), gpa, Gender.OTHER);
 
     assertThat(student.toString(), containsString(String.valueOf(gpa)));
   }
@@ -59,7 +59,7 @@ public class StudentTest
   void toStringContainsNameAndGpa() {
     double gpa = 3.45;
     String name = "Name";
-    Student student = new Student(name, emptyList(), gpa, "other");
+    Student student = new Student(name, emptyList(), gpa, Gender.OTHER);
 
     assertThat(student.toString(), containsString(name + " has a GPA of " + gpa));
 
@@ -69,7 +69,7 @@ public class StudentTest
   void studentTakingZeroClasses() {
     double gpa = 3.45;
     String name = "Name";
-    Student student = new Student(name, emptyList(), gpa, "other");
+    Student student = new Student(name, emptyList(), gpa, Gender.OTHER);
 
     assertThat(student.toString(), containsString("is taking 0 classes."));
   }
@@ -79,7 +79,7 @@ public class StudentTest
     String className = "Class1";
     List<String> classes = List.of(className);
 
-    Student student = new Student("Name", classes, 3.45, "other");
+    Student student = new Student("Name", classes, 3.45, Gender.OTHER);
 
     assertThat(student.toString(), containsString("is taking 1 class: " + className + "."));
 
@@ -91,7 +91,7 @@ public class StudentTest
     String className2 = "Class2";
     List<String> classes = List.of(className1, className2);
 
-    Student student = new Student("Name", classes, 3.45, "other");
+    Student student = new Student("Name", classes, 3.45, Gender.OTHER);
 
     assertThat(student.toString(), containsString("is taking 2 classes: " + className1 + " and " + className2 + "."));
 
@@ -104,7 +104,7 @@ public class StudentTest
     String className3 = "Class3";
     List<String> classes = List.of(className1, className2, className3);
 
-    Student student = new Student("Name", classes, 3.45, "other");
+    Student student = new Student("Name", classes, 3.45, Gender.OTHER);
 
     assertThat(student.toString(), containsString("is taking 3 classes: " + className1 + ", " + className2 + ", and " + className3 + "."));
 
@@ -118,7 +118,7 @@ public class StudentTest
     String className4 = "Class4";
     List<String> classes = List.of(className1, className2, className3, className4);
 
-    Student student = new Student("Name", classes, 3.45, "other");
+    Student student = new Student("Name", classes, 3.45, Gender.OTHER);
 
     assertThat(student.toString(), containsString("is taking 4 classes: " + className1 + ", " + className2 + ", " + className3 + ", and " + className4 + "."));
 
@@ -126,19 +126,19 @@ public class StudentTest
 
   @Test
   void toStringContainsGenderPronoun() {
-    Student student = new Student("Name", emptyList(), 3.45, "other");
+    Student student = new Student("Name", emptyList(), 3.45, Gender.OTHER);
     assertThat(student.toString(), containsString("They"));
   }
 
   @Test
   void toStringContainsFemaleGenderPronoun() {
-    Student student = new Student("Name", emptyList(), 3.45, "female");
+    Student student = new Student("Name", emptyList(), 3.45, Gender.FEMALE);
     assertThat(student.toString(), containsString("She"));
   }
 
   @Test
   void toStringContainsMaleGenderPronoun() {
-    Student student = new Student("Name", emptyList(), 3.45, "male");
+    Student student = new Student("Name", emptyList(), 3.45, Gender.MALE);
     assertThat(student.toString(), containsString("He"));
   }
 
