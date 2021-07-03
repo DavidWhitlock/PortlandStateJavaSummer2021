@@ -180,6 +180,6 @@ public class Student extends Human {
   }
 
   private static boolean isRecognizedGender(String gender) {
-    return gender.equals("other") || gender.equals("female") || gender.equals("male");
+    return gender.equalsIgnoreCase("other") || gender.equalsIgnoreCase("female") || gender.equalsIgnoreCase("male");
   }
 }

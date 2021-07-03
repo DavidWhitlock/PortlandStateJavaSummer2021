@@ -1,12 +1,12 @@
 package edu.pdx.cs410J.whitlock;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.StringContains.containsString;
 
@@ -99,6 +99,27 @@ class StudentIT extends InvokeMainTestCase {
     MainMethodResult result = invokeMain(Student.class, "Dave", "unrecognized", "3.45");
     assertThat(result.getTextWrittenToStandardError(), containsString("Unrecognized gender: \"unrecognized\""));
     assertThat(result.getExitCode(), equalTo(1));
+  }
+
+  @Test
+  void otherGenderIsCaseInsensitive() {
+    assertCaseInsensitiveGenderIsSupported("Other");
+  }
+
+  @Test
+  void otherFemaleIsCaseInsensitive() {
+    assertCaseInsensitiveGenderIsSupported("Female");
+  }
+
+  @Test
+  void otherMaleIsCaseInsensitive() {
+    assertCaseInsensitiveGenderIsSupported("Male");
+  }
+
+  private void assertCaseInsensitiveGenderIsSupported(String caseInsensitiveGender) {
+    MainMethodResult result = invokeMain(Student.class, "Name", caseInsensitiveGender, "3.64");
+    assertThat(result.getTextWrittenToStandardError(), not(containsString("Unrecognized gender")));
+    assertThat(result.getExitCode(), equalTo(0));
   }
 
   @Test
