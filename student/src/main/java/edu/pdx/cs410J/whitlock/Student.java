@@ -15,6 +15,8 @@ public class Student extends Human {
   static final String MISSING_GPA = "Missing GPA";
   static final String GPA_OUT_OF_BOUNDS = "GPA is out of bounds.  Range is 0 to 4.";
 
+  private final double gpa;
+
   /**                                                                               
    * Creates a new <code>Student</code>                                             
    *                                                                                
@@ -30,6 +32,7 @@ public class Student extends Human {
    */                                                                               
   public Student(String name, ArrayList<String> classes, double gpa, String gender) {
     super(name);
+    this.gpa = gpa;
   }
 
   /**                                                                               
@@ -45,7 +48,7 @@ public class Student extends Human {
    * <code>Student</code>.                                                          
    */                                                                               
   public String toString() {
-    return getName();
+    return getName() + " has a GPA of " + gpa;
   }
 
   /**

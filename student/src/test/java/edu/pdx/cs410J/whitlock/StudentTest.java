@@ -49,4 +49,22 @@ public class StudentTest
     assertThat(dave.toString(), containsString("Dave"));
   }
 
+  @Test
+  void toStringContainsGpa() {
+    double gpa = 3.45;
+    Student student = new Student("Name", new ArrayList<>(), gpa, "other");
+
+    assertThat(student.toString(), containsString(String.valueOf(gpa)));
+  }
+
+  @Test
+  void toStringContainsNameAndGpa() {
+    double gpa = 3.45;
+    String name = "Name";
+    Student student = new Student(name, new ArrayList<>(), gpa, "other");
+
+    assertThat(student.toString(), containsString(name + " has a GPA of " + gpa));
+
+  }
+
 }
