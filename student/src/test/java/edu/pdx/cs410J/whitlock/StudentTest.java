@@ -124,4 +124,22 @@ public class StudentTest
 
   }
 
+  @Test
+  void toStringContainsGenderPronoun() {
+    Student student = new Student("Name", emptyList(), 3.45, "other");
+    assertThat(student.toString(), containsString("They"));
+  }
+
+  @Test
+  void toStringContainsFemaleGenderPronoun() {
+    Student student = new Student("Name", emptyList(), 3.45, "female");
+    assertThat(student.toString(), containsString("She"));
+  }
+
+  @Test
+  void toStringContainsMaleGenderPronoun() {
+    Student student = new Student("Name", emptyList(), 3.45, "male");
+    assertThat(student.toString(), containsString("He"));
+  }
+
 }

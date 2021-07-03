@@ -17,6 +17,7 @@ public class Student extends Human {
 
   private final double gpa;
   private final List<String> classes;
+  private final String gender;
 
   /**                                                                               
    * Creates a new <code>Student</code>                                             
@@ -35,6 +36,7 @@ public class Student extends Human {
     super(name);
     this.gpa = gpa;
     this.classes = classes;
+    this.gender = gender;
   }
 
   /**                                                                               
@@ -59,8 +61,31 @@ public class Student extends Human {
 
     appendClasses(sb);
 
-    sb.append(".");
+    sb.append(".  ");
+
+    appendGenderPronoun(sb);
+
     return sb.toString();
+  }
+
+  private void appendGenderPronoun(StringBuilder sb) {
+    switch (this.gender) {
+      case "other":
+        sb.append("They");
+        break;
+
+      case "female":
+        sb.append("She");
+        break;
+
+      case "male":
+        sb.append("He");
+        break;
+
+      default:
+        throw new UnsupportedOperationException("Unrecognized gender: " + gender);
+    }
+
   }
 
   private void appendClasses(StringBuilder sb) {
