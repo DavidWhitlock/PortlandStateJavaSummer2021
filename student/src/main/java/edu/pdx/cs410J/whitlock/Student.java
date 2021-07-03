@@ -2,6 +2,7 @@ package edu.pdx.cs410J.whitlock;
 
 import edu.pdx.cs410J.lang.Human;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**                                                                                 
@@ -129,34 +130,43 @@ public class Student extends Human {
    */
   public static void main(String[] args) {
     String name = null;
-    String gender = null;
-    String gpa = null;
+    Gender gender = null;
+    Double gpa = null;
+    List<String> classes = new ArrayList<>();
 
     for (String arg : args) {
       if (name == null) {
         name = arg;
 
       } else if (gender == null) {
-        gender = arg;
-        if (!isRecognizedGender(gender)) {
-          printErrorMessageAndExit("Unrecognized gender: \"" + gender + "\"");
+        gender = parseGender(arg);
+        if (gender == null) {
+          printErrorMessageAndExit("Unrecognized gender: \"" + arg + "\"");
         }
 
       } else if (gpa == null) {
-        gpa = arg;
-        validateGpa(gpa);
+        gpa = validateGpa(arg);
+
+      } else {
+        classes.add(arg);
       }
     }
 
     if (name == null) {
       printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);
+      return;
 
     } else if (gender == null) {
       printErrorMessageAndExit(MISSING_GENDER);
+      return;
 
     } else if (gpa == null) {
       printErrorMessageAndExit(MISSING_GPA);
+      return;
     }
+
+    Student student = new Student(name, classes, gpa, gender);
+    System.out.println(student);
 
     System.exit(0);
   }
@@ -167,19 +177,32 @@ public class Student extends Human {
     System.exit(1);
   }
 
-  private static void validateGpa(String gpaAsString) {
+  private static Double validateGpa(String gpaAsString) {
     try {
       double gpa = Double.parseDouble(gpaAsString);
       if (gpa < 0.0 || gpa > 4.0) {
         printErrorMessageAndExit(GPA_OUT_OF_BOUNDS);
       }
+      return gpa;
 
     } catch (NumberFormatException ex) {
       printErrorMessageAndExit("Invalid GPA: " + gpaAsString);
+      return null;
     }
   }
 
-  private static boolean isRecognizedGender(String gender) {
-    return gender.equalsIgnoreCase("other") || gender.equalsIgnoreCase("female") || gender.equalsIgnoreCase("male");
+  private static Gender parseGender(String gender) {
+    if (gender.equalsIgnoreCase("other")) {
+      return Gender.OTHER;
+
+    } else if (gender.equalsIgnoreCase("female")) {
+      return Gender.FEMALE;
+
+    } else if (gender.equalsIgnoreCase("male")) {
+      return Gender.MALE;
+
+    } else {
+      return null;
+    }
   }
 }

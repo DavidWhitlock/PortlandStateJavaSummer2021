@@ -1,7 +1,6 @@
 package edu.pdx.cs410J.whitlock;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -123,12 +122,11 @@ class StudentIT extends InvokeMainTestCase {
   }
 
   @Test
-  @Disabled
   void daveStudentFromAssignment() {
     MainMethodResult result = invokeMain(Student.class, "Dave", "male", "3.64", "Algorithms", "Operating Systems", "Java");
     assertThat(result.getTextWrittenToStandardError(), emptyString());
     String message = "Dave has a GPA of 3.64 and is taking 3 classes: Algorithms, Operating " +
-      "Systems, and Java. He says \"This class is too much work\".";
+      "Systems, and Java.  He says \"This class is too much work\".\n";
     assertThat(result.getTextWrittenToStandardOut(), equalTo(message));
     assertThat(result.getExitCode(), equalTo(0));
   }
