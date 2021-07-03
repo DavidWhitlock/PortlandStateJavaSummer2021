@@ -25,6 +25,12 @@ public class StudentTest
     assertThat(pat.getName(), equalTo(name));
   }
 
+  private Student getDave() {
+    List<String> classes = List.of("Algorithms", "Operating Systems", "Java");
+
+    return new Student("Dave", classes, 3.64, "male");
+  }
+
   @Test
   @Disabled
   void daveStudentFromAssignment() {
@@ -32,12 +38,6 @@ public class StudentTest
 
     assertThat(dave.toString(), equalTo("Dave has a GPA of 3.64 and is taking 3 classes: Algorithms, Operating " +
       "Systems, and Java.  He says \"This class is too much work\"."));
-  }
-
-  private Student getDave() {
-    List<String> classes = List.of("Algorithms", "Operating Systems", "Java");
-
-    return new Student("Dave", classes, 3.64, "male");
   }
 
   @Test
@@ -94,6 +94,33 @@ public class StudentTest
     Student student = new Student("Name", classes, 3.45, "other");
 
     assertThat(student.toString(), containsString("is taking 2 classes: " + className1 + " and " + className2 + "."));
+
+  }
+
+  @Test
+  void studentTakingThreeClasses() {
+    String className1 = "Class1";
+    String className2 = "Class2";
+    String className3 = "Class3";
+    List<String> classes = List.of(className1, className2, className3);
+
+    Student student = new Student("Name", classes, 3.45, "other");
+
+    assertThat(student.toString(), containsString("is taking 3 classes: " + className1 + ", " + className2 + ", and " + className3 + "."));
+
+  }
+
+  @Test
+  void studentTakingFourClasses() {
+    String className1 = "Class1";
+    String className2 = "Class2";
+    String className3 = "Class3";
+    String className4 = "Class4";
+    List<String> classes = List.of(className1, className2, className3, className4);
+
+    Student student = new Student("Name", classes, 3.45, "other");
+
+    assertThat(student.toString(), containsString("is taking 4 classes: " + className1 + ", " + className2 + ", " + className3 + ", and " + className4 + "."));
 
   }
 

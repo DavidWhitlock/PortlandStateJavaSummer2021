@@ -57,26 +57,41 @@ public class Student extends Human {
     sb.append(" and is taking ").append(numClasses).append(" class");
     sb.append(numClasses == 1 ? "" : "es");
 
+    appendClasses(sb);
+
+    sb.append(".");
+    return sb.toString();
+  }
+
+  private void appendClasses(StringBuilder sb) {
+    int numClasses = this.classes.size();
     if (numClasses > 0) {
       sb.append(": ");
 
       if (numClasses == 1) {
         sb.append(this.classes.get(0));
 
+      } else if (numClasses == 2) {
+        sb.append(this.classes.get(0));
+        sb.append(" and ");
+        sb.append(this.classes.get(1));
+
       } else {
         for (int i = 0; i < numClasses; i++) {
-          if (i == numClasses - 1) {
-            sb.append(" and ");
+          boolean isLastClass = (i == numClasses - 1);
+          if (isLastClass) {
+            sb.append("and ");
           }
 
           String className = this.classes.get(i);
           sb.append(className);
+
+          if (!isLastClass) {
+            sb.append(", ");
+          }
         }
       }
     }
-
-    sb.append(".");
-    return sb.toString();
   }
 
   /**
