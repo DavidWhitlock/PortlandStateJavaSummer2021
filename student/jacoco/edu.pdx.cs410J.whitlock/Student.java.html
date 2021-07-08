@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Student.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Student Project</a> &gt; <a href="index.source.html" class="el_package">edu.pdx.cs410J.whitlock</a> &gt; <span class="el_source">Student.java</span></div><h1>Student.java</h1><pre class="source lang-java linenums">package edu.pdx.cs410J.whitlock;
+
+import edu.pdx.cs410J.lang.Human;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**                                                                                 
+ * This class is represents a &lt;code&gt;Student&lt;/code&gt;.                                 
+ */                                                                                 
+public class Student extends Human {
+
+  public static final String USAGE_MESSAGE = &quot;usage: java Student name gender gpa classes&quot;;
+  static final String MISSING_COMMAND_LINE_ARGUMENTS = &quot;Missing command line arguments&quot;;
+  static final String MISSING_GENDER = &quot;Missing Gender&quot;;
+  static final String MISSING_GPA = &quot;Missing GPA&quot;;
+  static final String GPA_OUT_OF_BOUNDS = &quot;GPA is out of bounds.  Range is 0 to 4.&quot;;
+
+  private final double gpa;
+  private final List&lt;String&gt; classes;
+  private final Gender gender;
+
+  /**                                                                               
+   * Creates a new &lt;code&gt;Student&lt;/code&gt;                                             
+   *                                                                                
+   * @param name                                                                    
+   *        The student's name                                                      
+   * @param classes                                                                 
+   *        The names of the classes the student is taking.  A student              
+   *        may take zero or more classes.                                          
+   * @param gpa                                                                     
+   *        The student's grade point average                                       
+   * @param gender                                                                  
+   *        The student's gender (&quot;male&quot;, &quot;female&quot;, or &quot;other&quot;, case insensitive)
+   */                                                                               
+  public Student(String name, List&lt;String&gt; classes, double gpa, Gender gender) {
+<span class="fc" id="L37">    super(name);</span>
+<span class="fc" id="L38">    this.gpa = gpa;</span>
+<span class="fc" id="L39">    this.classes = classes;</span>
+<span class="fc" id="L40">    this.gender = gender;</span>
+<span class="fc" id="L41">  }</span>
+
+  /**                                                                               
+   * All students say &quot;This class is too much work&quot;
+   */
+  @Override
+  public String says() {                                                            
+<span class="fc" id="L48">    return &quot;This class is too much work&quot;;</span>
+  }
+                                                                                    
+  /**                                                                               
+   * Returns a &lt;code&gt;String&lt;/code&gt; that describes this                              
+   * &lt;code&gt;Student&lt;/code&gt;.                                                          
+   */                                                                               
+  public String toString() {
+<span class="fc" id="L56">    int numClasses = this.classes.size();</span>
+
+<span class="fc" id="L58">    StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L59">    sb.append(getName()).append(&quot; has a GPA of &quot;).append(gpa);</span>
+<span class="fc" id="L60">    sb.append(&quot; and is taking &quot;).append(numClasses).append(&quot; class&quot;);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">    sb.append(numClasses == 1 ? &quot;&quot; : &quot;es&quot;);</span>
+
+<span class="fc" id="L63">    appendClasses(sb);</span>
+
+<span class="fc" id="L65">    sb.append(&quot;.  &quot;);</span>
+
+<span class="fc" id="L67">    appendGenderPronoun(sb);</span>
+<span class="fc" id="L68">    sb.append(&quot; says \&quot;&quot;);</span>
+<span class="fc" id="L69">    sb.append(says());</span>
+<span class="fc" id="L70">    sb.append(&quot;\&quot;.&quot;);</span>
+
+<span class="fc" id="L72">    return sb.toString();</span>
+  }
+
+  private void appendGenderPronoun(StringBuilder sb) {
+<span class="pc bpc" id="L76" title="1 of 4 branches missed.">    switch (this.gender) {</span>
+      case OTHER:
+<span class="fc" id="L78">        sb.append(&quot;They&quot;);</span>
+<span class="fc" id="L79">        break;</span>
+
+      case FEMALE:
+<span class="fc" id="L82">        sb.append(&quot;She&quot;);</span>
+<span class="fc" id="L83">        break;</span>
+
+      case MALE:
+<span class="fc" id="L86">        sb.append(&quot;He&quot;);</span>
+<span class="fc" id="L87">        break;</span>
+
+      default:
+<span class="nc" id="L90">        throw new UnsupportedOperationException(&quot;Unrecognized gender: &quot; + gender);</span>
+    }
+
+<span class="fc" id="L93">  }</span>
+
+  private void appendClasses(StringBuilder sb) {
+<span class="fc" id="L96">    int numClasses = this.classes.size();</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">    if (numClasses &gt; 0) {</span>
+<span class="fc" id="L98">      sb.append(&quot;: &quot;);</span>
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">      if (numClasses == 1) {</span>
+<span class="fc" id="L101">        sb.append(this.classes.get(0));</span>
+
+<span class="fc bfc" id="L103" title="All 2 branches covered.">      } else if (numClasses == 2) {</span>
+<span class="fc" id="L104">        sb.append(this.classes.get(0));</span>
+<span class="fc" id="L105">        sb.append(&quot; and &quot;);</span>
+<span class="fc" id="L106">        sb.append(this.classes.get(1));</span>
+
+      } else {
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        for (int i = 0; i &lt; numClasses; i++) {</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">          boolean isLastClass = (i == numClasses - 1);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">          if (isLastClass) {</span>
+<span class="fc" id="L112">            sb.append(&quot;and &quot;);</span>
+          }
+
+<span class="fc" id="L115">          String className = this.classes.get(i);</span>
+<span class="fc" id="L116">          sb.append(className);</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">          if (!isLastClass) {</span>
+<span class="fc" id="L119">            sb.append(&quot;, &quot;);</span>
+          }
+        }
+      }
+    }
+<span class="fc" id="L124">  }</span>
+
+  /**
+   * Main program that parses the command line, creates a
+   * &lt;code&gt;Student&lt;/code&gt;, and prints a description of the student to
+   * standard out by invoking its &lt;code&gt;toString&lt;/code&gt; method.
+   */
+  public static void main(String[] args) {
+<span class="fc" id="L132">    String name = null;</span>
+<span class="fc" id="L133">    Gender gender = null;</span>
+<span class="fc" id="L134">    Double gpa = null;</span>
+<span class="fc" id="L135">    List&lt;String&gt; classes = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L137" title="All 2 branches covered.">    for (String arg : args) {</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">      if (name == null) {</span>
+<span class="fc" id="L139">        name = arg;</span>
+
+<span class="fc bfc" id="L141" title="All 2 branches covered.">      } else if (gender == null) {</span>
+<span class="fc" id="L142">        gender = parseGender(arg);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">        if (gender == null) {</span>
+<span class="nc" id="L144">          printErrorMessageAndExit(&quot;Unrecognized gender: \&quot;&quot; + arg + &quot;\&quot;&quot;);</span>
+        }
+
+<span class="fc bfc" id="L147" title="All 2 branches covered.">      } else if (gpa == null) {</span>
+<span class="fc" id="L148">        gpa = validateGpa(arg);</span>
+
+      } else {
+<span class="fc" id="L151">        classes.add(arg);</span>
+      }
+    }
+
+<span class="fc bfc" id="L155" title="All 2 branches covered.">    if (name == null) {</span>
+<span class="nc" id="L156">      printErrorMessageAndExit(MISSING_COMMAND_LINE_ARGUMENTS);</span>
+<span class="nc" id="L157">      return;</span>
+
+<span class="fc bfc" id="L159" title="All 2 branches covered.">    } else if (gender == null) {</span>
+<span class="nc" id="L160">      printErrorMessageAndExit(MISSING_GENDER);</span>
+<span class="nc" id="L161">      return;</span>
+
+<span class="fc bfc" id="L163" title="All 2 branches covered.">    } else if (gpa == null) {</span>
+<span class="nc" id="L164">      printErrorMessageAndExit(MISSING_GPA);</span>
+<span class="nc" id="L165">      return;</span>
+    }
+
+<span class="fc" id="L168">    Student student = new Student(name, classes, gpa, gender);</span>
+<span class="fc" id="L169">    System.out.println(student);</span>
+
+<span class="nc" id="L171">    System.exit(0);</span>
+<span class="nc" id="L172">  }</span>
+
+  private static void printErrorMessageAndExit(String message) {
+<span class="fc" id="L175">    System.err.println(message);</span>
+<span class="fc" id="L176">    System.err.println(USAGE_MESSAGE);</span>
+<span class="nc" id="L177">    System.exit(1);</span>
+<span class="nc" id="L178">  }</span>
+
+  private static Double validateGpa(String gpaAsString) {
+    try {
+<span class="fc" id="L182">      double gpa = Double.parseDouble(gpaAsString);</span>
+<span class="fc bfc" id="L183" title="All 4 branches covered.">      if (gpa &lt; 0.0 || gpa &gt; 4.0) {</span>
+<span class="nc" id="L184">        printErrorMessageAndExit(GPA_OUT_OF_BOUNDS);</span>
+      }
+<span class="fc" id="L186">      return gpa;</span>
+
+<span class="fc" id="L188">    } catch (NumberFormatException ex) {</span>
+<span class="nc" id="L189">      printErrorMessageAndExit(&quot;Invalid GPA: &quot; + gpaAsString);</span>
+<span class="nc" id="L190">      return null;</span>
+    }
+  }
+
+  private static Gender parseGender(String gender) {
+<span class="fc bfc" id="L195" title="All 2 branches covered.">    if (gender.equalsIgnoreCase(&quot;other&quot;)) {</span>
+<span class="fc" id="L196">      return Gender.OTHER;</span>
+
+<span class="fc bfc" id="L198" title="All 2 branches covered.">    } else if (gender.equalsIgnoreCase(&quot;female&quot;)) {</span>
+<span class="fc" id="L199">      return Gender.FEMALE;</span>
+
+<span class="fc bfc" id="L201" title="All 2 branches covered.">    } else if (gender.equalsIgnoreCase(&quot;male&quot;)) {</span>
+<span class="fc" id="L202">      return Gender.MALE;</span>
+
+    } else {
+<span class="fc" id="L205">      return null;</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
