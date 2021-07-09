@@ -21,7 +21,7 @@ accordingly
   <packaging>pom</packaging>
   <name>PSUJavaSummer2021</name>
   <description>Source code written in the Summer 2021 offering of Advanced Programming with Java</description>
-  <url>http://YourGitHubUser.github.io/PortlandStateJavaSummer2021</url>
+  <url>http://davidwhitlock.github.io/PortlandStateJavaSummer2021</url>
 
   <modules>
     <module>student</module>
@@ -36,7 +36,7 @@ accordingly
   </organization>
   <issueManagement>
     <system>github</system>
-    <url>https://github.com/YourGitHubUser/PortlandStateJavaSummer2021/issues</url>
+    <url>https://github.com/DavidWhitlock/PortlandStateJavaSummer2021/issues</url>
   </issueManagement>
   <licenses>
     <license>
@@ -60,13 +60,13 @@ accordingly
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git@github.com:YourGitHubUser/PortlandStateJavaSummer2021.git</connection>
+    <connection>scm:git:git@github.com:DavidWhitlock/PortlandStateJavaSummer2021.git</connection>
   </scm>
   <distributionManagement>
     <site>
       <id>gh-pages</id>
       <name>GitHub Pages</name>
-      <url>github:http://YourGitHubUser.github.io/PortlandStateJavaSummer2021/</url>
+      <url>github:http://davidwhitlock.github.io/PortlandStateJavaSummer2021/</url>
     </site>
   </distributionManagement>
 
