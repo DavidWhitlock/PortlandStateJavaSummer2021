@@ -7,10 +7,15 @@ import java.util.Collection;
 
 public class AppointmentBook extends AbstractAppointmentBook<Appointment> {
   private final Collection<Appointment> appointments = new ArrayList<>();
+  private final String owner;
+
+  public AppointmentBook(String owner) {
+    this.owner = owner;
+  }
 
   @Override
   public String getOwnerName() {
-    throw new UnsupportedOperationException("This method is not implemented yet");
+    return owner;
   }
 
   @Override
