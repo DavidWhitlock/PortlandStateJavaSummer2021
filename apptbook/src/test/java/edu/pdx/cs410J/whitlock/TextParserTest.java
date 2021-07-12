@@ -2,6 +2,7 @@ package edu.pdx.cs410J.whitlock;
 
 import edu.pdx.cs410J.ParserException;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.*;
 
@@ -31,6 +32,22 @@ public class TextParserTest {
     dumper.dump(book);
 
     TextParser parser = new TextParser(new StringReader(sw.toString()));
+    book = parser.parse();
+
+    assertThat(book.getOwnerName(), equalTo(owner));
+  }
+
+  @Test
+  void appointmentBookOwnerCanBeDumpedToFileAndParsed(@TempDir File dir) throws IOException, ParserException {
+    File textFile = new File(dir, "appointments.txt");
+
+    String owner = "Owner";
+    AppointmentBook book = new AppointmentBook(owner);
+
+    TextDumper dumper = new TextDumper(new FileWriter(textFile));
+    dumper.dump(book);
+
+    TextParser parser = new TextParser(new FileReader(textFile));
     book = parser.parse();
 
     assertThat(book.getOwnerName(), equalTo(owner));

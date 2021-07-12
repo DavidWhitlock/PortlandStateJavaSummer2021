@@ -15,5 +15,6 @@ public class TextDumper implements AppointmentBookDumper<AppointmentBook> {
   @Override
   public void dump(AppointmentBook book) throws IOException {
     writer.write(book.getOwnerName());
+    writer.flush();
   }
 }
