@@ -52,4 +52,15 @@ public class TextParserTest {
 
     assertThat(book.getOwnerName(), equalTo(owner));
   }
+
+  @Test
+  void printFilesInCurrentWorkingDirectory() {
+    File cwd = new File(System.getProperty("user.dir"));
+    System.out.println(cwd);
+
+    File[] children = cwd.listFiles();
+    for(File child : children) {
+      System.out.println(child);
+    }
+  }
 }
