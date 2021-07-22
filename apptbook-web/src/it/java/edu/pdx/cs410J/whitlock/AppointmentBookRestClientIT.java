@@ -27,34 +27,28 @@ class AppointmentBookRestClientIT {
   }
 
   @Test
-  void test0RemoveAllDictionaryEntries() throws IOException {
+  void test0RemoveAllAppointmentBooks() throws IOException {
     AppointmentBookRestClient client = newAppointmentBookRestClient();
-    client.removeAllDictionaryEntries();
+    client.removeAllAppointmentBooks();
   }
 
   @Test
-  void test1EmptyServerContainsNoDictionaryEntries() throws IOException {
+  void test2CreateAppointmentBookWithOneAppointment() throws IOException {
     AppointmentBookRestClient client = newAppointmentBookRestClient();
-    Map<String, String> dictionary = client.getAllDictionaryEntries();
-    assertThat(dictionary.size(), equalTo(0));
-  }
+    String owner = "Dave";
+    String description = "Teach more Java";
+    client.createAppointment(owner, description);
 
-  @Test
-  void test2DefineOneWord() throws IOException {
-    AppointmentBookRestClient client = newAppointmentBookRestClient();
-    String testWord = "TEST WORD";
-    String testDefinition = "TEST DEFINITION";
-    client.addDictionaryEntry(testWord, testDefinition);
-
-    String definition = client.getDefinition(testWord);
-    assertThat(definition, equalTo(testDefinition));
+    String appointmentBookText = client.getAppointments(owner);
+    assertThat(appointmentBookText, containsString(owner));
+    assertThat(appointmentBookText, containsString(description));
   }
 
   @Test
   void test4MissingRequiredParameterReturnsPreconditionFailed() throws IOException {
     AppointmentBookRestClient client = newAppointmentBookRestClient();
     HttpRequestHelper.Response response = client.postToMyURL(Map.of());
-    assertThat(response.getContent(), containsString(Messages.missingRequiredParameter("word")));
+    assertThat(response.getContent(), containsString("Precondition Failed"));
     assertThat(response.getCode(), equalTo(HttpURLConnection.HTTP_PRECON_FAILED));
   }
 
