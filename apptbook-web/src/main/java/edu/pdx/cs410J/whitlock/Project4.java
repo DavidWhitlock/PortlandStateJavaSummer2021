@@ -2,9 +2,6 @@ package edu.pdx.cs410J.whitlock;
 
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Map;
 
 /**
  * The main class that parses the command line and communicates with the
@@ -17,8 +14,8 @@ public class Project4 {
     public static void main(String... args) {
         String hostName = null;
         String portString = null;
-        String word = null;
-        String definition = null;
+        String owner = null;
+        String description = null;
 
         for (String arg : args) {
             if (hostName == null) {
@@ -27,22 +24,25 @@ public class Project4 {
             } else if ( portString == null) {
                 portString = arg;
 
-            } else if (word == null) {
-                word = arg;
+            } else if (owner == null) {
+                owner = arg;
 
-            } else if (definition == null) {
-                definition = arg;
+            } else if (description == null) {
+                description = arg;
 
             } else {
                 usage("Extraneous command line argument: " + arg);
+                return;
             }
         }
 
         if (hostName == null) {
             usage( MISSING_ARGS );
+            return;
 
         } else if ( portString == null) {
             usage( "Missing port" );
+            return;
         }
 
         int port;
@@ -56,31 +56,25 @@ public class Project4 {
 
         AppointmentBookRestClient client = new AppointmentBookRestClient(hostName, port);
 
-        String message;
         try {
-            if (word == null) {
-                // Print all word/definition pairs
-                Map<String, String> dictionary = client.getAllDictionaryEntries();
-                StringWriter sw = new StringWriter();
-                Messages.formatDictionaryEntries(new PrintWriter(sw, true), dictionary);
-                message = sw.toString();
+            if (owner == null) {
+                usage("Missing owner");
 
-            } else if (definition == null) {
-                // Print all dictionary entries
-                message = Messages.formatDictionaryEntry(word, client.getAppointments(word));
+            } else if (description == null) {
+                // Get the text of the appointment book
+                String text = client.getAppointments(owner);
+                System.out.println(text);  // But you'll need to pretty print it!
 
             } else {
-                // Post the word/definition pair
-                client.createAppointment(word, definition);
-                message = Messages.definedWordAs(word, definition);
+                // Create a new appointment
+                client.createAppointment(owner, description);
             }
 
         } catch ( IOException ex ) {
             error("While contacting server: " + ex);
+            System.exit(1);
             return;
         }
-
-        System.out.println(message);
 
         System.exit(0);
     }
