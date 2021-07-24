@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.whitlock;
 
+import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 import org.junit.jupiter.api.MethodOrderer.MethodName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,6 @@ import java.net.HttpURLConnection;
 import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
 /**
@@ -33,15 +33,17 @@ class AppointmentBookRestClientIT {
   }
 
   @Test
-  void test2CreateAppointmentBookWithOneAppointment() throws IOException {
+  void test2CreateAppointmentBookWithOneAppointment() throws IOException, ParserException {
     AppointmentBookRestClient client = newAppointmentBookRestClient();
     String owner = "Dave";
     String description = "Teach more Java";
     client.createAppointment(owner, description);
 
-    String appointmentBookText = client.getAppointments(owner);
-    assertThat(appointmentBookText, containsString(owner));
-    assertThat(appointmentBookText, containsString(description));
+    AppointmentBook book = client.getAppointments(owner);
+    assertThat(book.getOwnerName(), equalTo(owner));
+
+    Appointment appointment = book.getAppointments().iterator().next();
+    assertThat(appointment.getDescription(), equalTo(description));
   }
 
   @Test

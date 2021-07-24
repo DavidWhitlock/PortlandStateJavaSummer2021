@@ -1,6 +1,9 @@
 package edu.pdx.cs410J.whitlock;
 
+import edu.pdx.cs410J.ParserException;
+
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 
 /**
@@ -62,15 +65,16 @@ public class Project4 {
 
             } else if (description == null) {
                 // Get the text of the appointment book
-                String text = client.getAppointments(owner);
-                System.out.println(text);  // But you'll need to pretty print it!
+                AppointmentBook book = client.getAppointments(owner);
+                PrettyPrinter pretty = new PrettyPrinter(new OutputStreamWriter(System.out));
+                pretty.dump(book);
 
             } else {
                 // Create a new appointment
                 client.createAppointment(owner, description);
             }
 
-        } catch ( IOException ex ) {
+        } catch (IOException | ParserException ex ) {
             error("While contacting server: " + ex);
             System.exit(1);
             return;
