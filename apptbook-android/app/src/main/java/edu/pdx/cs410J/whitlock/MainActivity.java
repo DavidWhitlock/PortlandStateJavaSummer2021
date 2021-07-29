@@ -39,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Appointment appointment = new Appointment("Teach Java", "07/28/2021 5:30 PM", "07/28/2021 9:00 PM");
+                Snackbar.make(view, appointment.toString(), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
