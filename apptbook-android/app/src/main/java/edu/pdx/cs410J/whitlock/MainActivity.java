@@ -11,10 +11,18 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import edu.pdx.cs410J.whitlock.databinding.ActivityMainBinding;
 
@@ -52,15 +60,25 @@ public class MainActivity extends AppCompatActivity {
         });
 
         this.sums = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        try {
+            loadSumsFromFile();
+        } catch (IOException e) {
+            toast("While reading file: " + e.getMessage());
+        }
         ListView listOfSums = findViewById(R.id.sums);
         listOfSums.setAdapter(this.sums);
         listOfSums.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Object item = adapterView.getAdapter().getItem(i);
-                Toast.makeText(MainActivity.this, "Selected item " + i + ": " + item, Toast.LENGTH_LONG).show();
+                String message = "Selected item " + i + ": " + item;
+                toast(message);
             }
         });
+    }
+
+    private void toast(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -70,7 +88,50 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == GET_SUM_FROM_CALCULATOR && data != null) {
             double sum = data.getDoubleExtra(CalculatorActivity.EXTRA_SUM, 0.0);
             this.sums.add(sum);
+            try {
+                writeSumsToFile();
+            } catch (IOException e) {
+                toast("While writing to file: " + e.getMessage());
+            }
         }
+    }
+
+    private void loadSumsFromFile() throws IOException {
+        File sumsFile = getSumsFile();
+        if (!sumsFile.exists()) {
+            return;
+        }
+
+        try (
+                BufferedReader br = new BufferedReader(new FileReader(sumsFile))
+        ) {
+            String line = br.readLine();
+            while(line != null) {
+                Double sum = Double.parseDouble(line);
+                this.sums.add(sum);
+                line = br.readLine();
+            }
+        }
+    }
+
+    private void writeSumsToFile() throws IOException {
+        File sumsFile = getSumsFile();
+        try (
+            PrintWriter pw = new PrintWriter(new FileWriter(sumsFile))
+        ) {
+            for (int i = 0; i < this.sums.getCount(); i++) {
+                Double sum = this.sums.getItem(i);
+                pw.println(sum);
+            }
+            pw.flush();
+        }
+    }
+
+    @NonNull
+    private File getSumsFile() {
+        File contextDirectory = getApplicationContext().getDataDir();
+        File sumsFile = new File(contextDirectory, "sums.txt");
+        return sumsFile;
     }
 
     @Override
