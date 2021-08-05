@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
         this.sums = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         ListView listOfSums = findViewById(R.id.sums);
         listOfSums.setAdapter(this.sums);
+        listOfSums.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Object item = adapterView.getAdapter().getItem(i);
+                Toast.makeText(MainActivity.this, "Selected item " + i + ": " + item, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
