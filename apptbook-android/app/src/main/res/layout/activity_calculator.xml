@@ -8,10 +8,11 @@
 
 
     <LinearLayout
+        android:id="@+id/calculator_widgets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -20,11 +21,11 @@
             android:id="@+id/left_operand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:minEms="5"
-
-            android:text=""
             android:importantForAutofill="no"
+            android:inputType="number"
+
+            android:minEms="5"
+            android:text=""
             tools:ignore="LabelFor" />
 
         <TextView
@@ -39,10 +40,10 @@
             android:id="@+id/right_operand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:importantForAutofill="no"
             android:inputType="number"
             android:minEms="5"
             android:text=""
-            android:importantForAutofill="no"
             tools:ignore="LabelFor" />
 
         <Button
@@ -58,4 +59,14 @@
             android:minEms="6"
             android:text="" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/return_to_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/return_to_main"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calculator_widgets" />
 </androidx.constraintlayout.widget.ConstraintLayout>

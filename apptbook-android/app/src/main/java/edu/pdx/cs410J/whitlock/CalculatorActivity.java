@@ -1,15 +1,18 @@
 package edu.pdx.cs410J.whitlock;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class CalculatorActivity extends AppCompatActivity {
+
+    public static final String EXTRA_SUM = "Sum";
+    private double sum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +21,16 @@ public class CalculatorActivity extends AppCompatActivity {
 
         Button add = findViewById(R.id.add);
         add.setOnClickListener(view -> addOperandsAndDisplaySum());
+
+        Button returnToMain = findViewById(R.id.return_to_main);
+        returnToMain.setOnClickListener(view -> sendSumBackToMain());
+    }
+
+    private void sendSumBackToMain() {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_SUM, this.sum);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     private void addOperandsAndDisplaySum() {
@@ -44,7 +57,8 @@ public class CalculatorActivity extends AppCompatActivity {
 
 
         TextView sum = findViewById(R.id.sum);
-        sum.setText(String.valueOf(leftNumber + rightNumber));
+        this.sum = leftNumber + rightNumber;
+        sum.setText(String.valueOf(this.sum));
     }
 
     private void displayErrorMessage(String message) {

@@ -12,4 +12,5 @@
     <string name="launch_calculator">Launch Calculator</string>
     <string name="plus">+</string>
     <string name="equals">=</string>
+    <string name="return_to_main">Return To Main</string>
 </resources>

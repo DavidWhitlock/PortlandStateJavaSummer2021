@@ -6,7 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -15,6 +17,7 @@ import edu.pdx.cs410J.whitlock.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final int GET_SUM_FROM_CALCULATOR = 42;
     private ActivityMainBinding binding;
 
     @Override
@@ -40,9 +43,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, CalculatorActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, GET_SUM_FROM_CALCULATOR);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK && requestCode == GET_SUM_FROM_CALCULATOR && data != null) {
+            double sum = data.getDoubleExtra(CalculatorActivity.EXTRA_SUM, 0.0);
+            Toast.makeText(this, "Received sum: " + sum, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
