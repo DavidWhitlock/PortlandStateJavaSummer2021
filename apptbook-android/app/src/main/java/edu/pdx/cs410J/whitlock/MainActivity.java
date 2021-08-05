@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int GET_SUM_FROM_CALCULATOR = 42;
     private ActivityMainBinding binding;
+    private ArrayAdapter<Double> sums;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, GET_SUM_FROM_CALCULATOR);
             }
         });
+
+        this.sums = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        ListView listOfSums = findViewById(R.id.sums);
+        listOfSums.setAdapter(this.sums);
     }
 
     @Override
@@ -54,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK && requestCode == GET_SUM_FROM_CALCULATOR && data != null) {
             double sum = data.getDoubleExtra(CalculatorActivity.EXTRA_SUM, 0.0);
-            Toast.makeText(this, "Received sum: " + sum, Toast.LENGTH_LONG).show();
+            this.sums.add(sum);
         }
     }
 
