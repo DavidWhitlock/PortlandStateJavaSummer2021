@@ -93,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 toast("While writing to file: " + e.getMessage());
             }
+
+            Appointment appointment = (Appointment) data.getSerializableExtra(CalculatorActivity.EXTRA_APPOINTMENT);
+            toast("Got appointment: " + appointment);
         }
     }
 

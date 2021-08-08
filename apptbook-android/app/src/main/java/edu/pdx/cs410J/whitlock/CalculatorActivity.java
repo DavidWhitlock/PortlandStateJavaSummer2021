@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class CalculatorActivity extends AppCompatActivity {
 
     public static final String EXTRA_SUM = "Sum";
+    public static final String EXTRA_APPOINTMENT = "Appointment";
     private double sum;
 
     @Override
@@ -23,12 +24,16 @@ public class CalculatorActivity extends AppCompatActivity {
         add.setOnClickListener(view -> addOperandsAndDisplaySum());
 
         Button returnToMain = findViewById(R.id.return_to_main);
-        returnToMain.setOnClickListener(view -> sendSumBackToMain());
+        returnToMain.setOnClickListener(view -> sendSumAndAppointmentBackToMain());
     }
 
-    private void sendSumBackToMain() {
+    private void sendSumAndAppointmentBackToMain() {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_SUM, this.sum);
+
+        Appointment appointment = new Appointment("Appointment for sum: " + this.sum, "Begin", "End");
+        intent.putExtra(EXTRA_APPOINTMENT, appointment);
+
         setResult(RESULT_OK, intent);
         finish();
     }
